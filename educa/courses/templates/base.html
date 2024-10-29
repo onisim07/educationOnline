@@ -1,0 +1,33 @@
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Educa{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <div id="header">
+        <a href="/" class="logo">Educa</a>
+        <ul class="menu">
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Выйти</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Войти</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    {% block include_js %}
+    {% endblock %}
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+          // DOM-модель загружена
+          {% block domready %}
+          {% endblock %}
+        })
+    </script>
+</body>
+</html>
